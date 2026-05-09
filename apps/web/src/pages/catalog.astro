@@ -1,0 +1,166 @@
+---
+import Layout from "../layouts/Layout.astro"
+import TopNavBar from "../components/TopNavBar.astro"
+import Footer from "../components/Footer.astro"
+
+const collections = [
+    {
+        name: "ARCHITECT HOODIE 01",
+        cat: "OVERSIZED",
+        price: "1.249.000",
+        isNew: true,
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBH9UQV3v2Ktr94zyRFVSi0YW58z5wgqvTizu6akK7U1K6YjuQr4W98YwDdQICBXRp7f6pMRePJwqaBCrr3BfMDRlUuGLsuW-7-6bMBOnxTNIcQtGKiAym0MiuH6LBDLM0pPpBNt9DPyPxBKahMMdCR5JV2yggPcKnmYHQi4keyR1We4Vu2mc92q6-x8XApWR8fW2dZ9T6iXkyJrq3jGUcx0n4-OuOdaw5OchloVEKOrIo8ercUN7R3RJmE1UabipSnjWR3HXtIxYBO"
+    },
+    {
+        name: "STRUCTURED MOCK NECK",
+        cat: "KNITWEAR",
+        price: "899.000",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhAhgMZpCGwee-eMMdxR-pd5-xTjnNPRucqiC26VneWUGdjkqe8ev2HA9WS8Uk2DoHJ-1Fag5h4ewu9ZO6UJTyAT8hAMBgAEDWASP1Va8wsGtMaD7VnEH8-UZp_Us8bGGVIZdpEiLUloV98JpZvy_H4EyN_xwCZuJjVm1_0cm0NaS19juP7zompZGbD7KE8sLjBkusw6Z3AhOVkFLf88oWw3x86brQF1pQQ3m4DP9STa0-EbZ5jTmSCyCD-yCmssW_t4zSJfBFbD5M"
+    },
+    {
+        name: "ESSENTIAL TEE WHITE",
+        cat: "TOPS",
+        price: "449.000",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAtkQezIw0Wuu79uUN9nFzf3HI4ycmbfda6qFjhq_FBr_21Zf3N4V4QmfWlTUAKllEkmTmAk8JgpXF3hQ6PYeieCEW5hP5jCTslYg-yZ6VWPq8ktwxdlc8cbrXjBxBxe4ejR_j_DBNuVgviF7OdGqwlT9P9IEen_WMNtpTOkSl04Tr1-Jgr6a8Lmb4rDj7bPC19a5GywETtQ0YSt7lAewkvjMOVr504_Odn9MgIqK9CN7TgRC7esy9NB-dHa0ZIgaJ8I3iRxtDi9nEt"
+    },
+    {
+        name: "TECHNICAL SLACKS BLACK",
+        cat: "BOTTOMS",
+        price: "1.499.000",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhktY_7NZ_EgHeyuSPIDg4nXGKRQV_XaBBgzmbOSy51bZCFTWLPff-ZX5R1PG7Snn163xDdsgntl8gDPhucWzPJSlaaniyRstJ54J2wlZ3gGMtHhTiUoLIBQ6mddy6lvVyVNhIazpIqq4L-aCqAk2BqPI5SJM1YJxSqx4Znkf-CCYhF3n7IS5hloT1886Hv0Ud7NW54b24dMVjvudoC6Eny-NvacGgp92qoTVrb-JkYufgXWwZ4IIAP-mbS7BMtYHKjApQGXxfxowf"
+    },
+    {
+        name: "CASHMERE BLEND CARDIGAN",
+        cat: "KNITWEAR",
+        price: "2.199.000",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCv1HGN-GHs5wPNrfTRsWJGSek03_uMBtXe7MhrUd2Shb2fS8-Nqj3q6t_ysHGaq0-VQtzCGpqTMP92z2IFmAxCIQpq1sZTVOpJllH3vRQnJgz2V9QQuTeHxP9HJL0qtpaxy_nqukhhe-w1Sz6CqUMTO6CH9crQfGQ4iwge-FzWT-39pPCEOzgdR3D-x78Chgjz_hTJ-D8dLRJwqeN5B-CMh_h2N6NojH1x-KQyEI-t1gFiIDxSqUA5BHKAtIMwg49kRluKrywDLwjs"
+    },
+    { name: "Archive Vest 02", cat: "SLEEVELESS", price: "749.000", image: "https://images.unsplash.com/photo-1550000000000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Raw Hem Denim", cat: "BOTTOMS", price: "1.899.000", image: "https://images.unsplash.com/photo-1550000010000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Oversized Blazer", cat: "OUTERWEAR", price: "2.599.000", image: "https://images.unsplash.com/photo-1550000020000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Graphic Series 04", cat: "TOPS", price: "549.000", image: "https://images.unsplash.com/photo-1550000030000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Utility Shorts", cat: "BOTTOMS", price: "699.000", image: "https://images.unsplash.com/photo-1550000040000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Heavy Knit Beanie", cat: "ACCESSORIES", price: "299.000", image: "https://images.unsplash.com/photo-1550000050000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Modular Tote Bag", cat: "ACCESSORIES", price: "1.149.000", image: "https://images.unsplash.com/photo-1550000060000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Studio Turtleneck", cat: "TOPS", price: "849.000", image: "https://images.unsplash.com/photo-1550000070000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Canvas Work Jacket", cat: "OUTERWEAR", price: "1.799.000", image: "https://images.unsplash.com/photo-1550000080000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Nylon Cargo Pant", cat: "BOTTOMS", price: "1.349.000", image: "https://images.unsplash.com/photo-1550000090000?q=80&w=1000&auto=format&fit=crop" },
+    { name: "Sandwash Tee", cat: "TOPS", price: "499.000", image: "https://images.unsplash.com/photo-1550000100000?q=80&w=1000&auto=format&fit=crop" }
+];
+---
+
+<Layout>
+    <style>
+        .product-hover-img:hover {
+            transform: scale(1.05);
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #f9f9f9; }
+        ::-webkit-scrollbar-thumb { background: #1b1b1b; }
+    </style>
+    
+    <TopNavBar />
+
+    <div class="pt-20 flex min-h-screen" >
+        <!-- SideNavBar / Filter Sidebar -->
+        <aside class="sticky top-20 left-0 h-[calc(100vh-80px)] w-64 shrink-0 border-r border-zinc-900 bg-white hidden lg:block overflow-y-auto">
+            <div class="flex flex-col pt-20 pb-12 gap-8 px-8">
+                <div>
+                    <h3 class="font-label-caps text-label-caps text-zinc-900 font-black tracking-widest uppercase mb-2">FILTER</h3>
+                    <p class="font-label-caps text-[10px] text-zinc-400 tracking-widest uppercase">REFINE BY CATEGORY</p>
+                </div>
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="font-label-caps text-[11px] font-bold tracking-widest text-zinc-900 mb-4 uppercase">CATEGORY</h4>
+                        <ul class="space-y-3">
+                            <li class="font-label-caps text-[11px] text-zinc-900 font-black border-l-4 border-zinc-900 pl-4 cursor-pointer">New Arrivals</li>
+                            <li class="font-label-caps text-[11px] text-zinc-400 hover:text-zinc-900 pl-4 transition-all duration-300 cursor-pointer">Outerwear</li>
+                            <li class="font-label-caps text-[11px] text-zinc-400 hover:text-zinc-900 pl-4 transition-all duration-300 cursor-pointer">Tops</li>
+                            <li class="font-label-caps text-[11px] text-zinc-400 hover:text-zinc-900 pl-4 transition-all duration-300 cursor-pointer">Bottoms</li>
+                            <li class="font-label-caps text-[11px] text-zinc-400 hover:text-zinc-900 pl-4 transition-all duration-300 cursor-pointer">Accessories</li>
+                            <li class="font-label-caps text-[11px] text-zinc-400 hover:text-zinc-900 pl-4 transition-all duration-300 cursor-pointer">Archive</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="font-label-caps text-[11px] font-bold tracking-widest text-zinc-900 mb-4 uppercase">SIZE</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="border border-zinc-900 py-2 font-label-caps text-[10px] text-zinc-900 hover:bg-zinc-900 hover:text-white transition-colors">S</button>
+                            <button class="border border-zinc-200 py-2 font-label-caps text-[10px] text-zinc-400 hover:border-zinc-900 hover:text-zinc-900 transition-colors">M</button>
+                            <button class="border border-zinc-200 py-2 font-label-caps text-[10px] text-zinc-400 hover:border-zinc-900 hover:text-zinc-900 transition-colors">L</button>
+                            <button class="border border-zinc-200 py-2 font-label-caps text-[10px] text-zinc-400 hover:border-zinc-900 hover:text-zinc-900 transition-colors">XL</button>
+                        </div>
+                    </section>
+                    <section>
+                        <h4 class="font-label-caps text-[11px] font-bold tracking-widest text-zinc-900 mb-4 uppercase">COLOR</h4>
+                        <div class="flex flex-wrap gap-3">
+                            <div class="w-6 h-6 bg-black border border-zinc-200 cursor-pointer" title="Black"></div>
+                            <div class="w-6 h-6 bg-white border border-zinc-900 cursor-pointer" title="White"></div>
+                            <div class="w-6 h-6 bg-zinc-400 border border-zinc-200 cursor-pointer" title="Grey"></div>
+                            <div class="w-6 h-6 bg-[#d2b48c] border border-zinc-200 cursor-pointer" title="Sand"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 min-w-0 bg-surface min-h-screen px-8 md:px-16 py-12" style="margin-top:2%;">
+            <!-- Search & Breadcrumb -->
+            <div class="mb-12 flex flex-col md:flex-row justify-between items-end gap-6 border-b border-zinc-200 pb-8">
+                <div>
+                    <h1 class="font-headline-md text-headline-md text-on-surface uppercase tracking-tight">All Collections</h1>
+                    <p class="font-label-caps text-[10px] text-secondary tracking-[0.2em] mt-2">Showing {collections.length} of 124 collections</p>
+                </div>
+                <div class="w-full md:w-96 relative">
+                    <input class="w-full bg-transparent border-0 border-b border-zinc-900 focus:ring-0 focus:border-black font-label-caps text-[11px] py-2 px-0 placeholder:text-zinc-300" placeholder="SEARCH CATALOGUE" type="text" />
+                    <span class="material-symbols-outlined absolute right-0 bottom-2 text-zinc-400" data-icon="search">search</span>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-20">
+                {collections.map((p) => (
+                    <div class="flex flex-col group cursor-pointer">
+                        <div class="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 relative">
+                            <img 
+                                class="w-full h-full object-cover transition-transform duration-700 product-hover-img" 
+                                src={p.image}
+                                alt={p.name}
+                            />
+                            {p.isNew && (
+                                <div class="absolute top-4 left-4 bg-white px-3 py-1 border border-zinc-900 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span class="font-label-caps text-[9px] font-bold text-zinc-900 tracking-widest">NEW ARRIVAL</span>
+                                </div>
+                            )}
+                        </div>
+                        <div class="space-y-1">
+                            <p class="font-label-caps text-[10px] text-zinc-400 tracking-widest">{p.cat}</p>
+                            <h3 class="font-body-md font-bold text-on-surface uppercase tracking-wider">{p.name}</h3>
+                            <p class="font-body-md text-secondary">IDR {p.price}</p>
+                        </div>
+                        <div class="mt-6 space-y-2">
+                            <a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-zinc-800 transition-colors" href="https://shopee.co.id" target="_blank">SHOP ON SHOPEE</a>
+                            <a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-black hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-section-gap flex justify-center items-center gap-8 border-t border-zinc-200 pt-16">
+                <span class="material-symbols-outlined text-zinc-300 cursor-not-allowed" data-icon="chevron_left">chevron_left</span>
+                <div class="flex items-center gap-6">
+                    <button class="font-label-caps text-label-caps text-zinc-900 font-bold border-b-2 border-zinc-900 pb-1">1</button>
+                    <button class="font-label-caps text-label-caps text-zinc-400 hover:text-zinc-900 transition-colors">2</button>
+                    <button class="font-label-caps text-label-caps text-zinc-400 hover:text-zinc-900 transition-colors">3</button>
+                    <button class="font-label-caps text-label-caps text-zinc-400 hover:text-zinc-900 transition-colors">4</button>
+                    <span class="font-label-caps text-label-caps text-zinc-300">...</span>
+                    <button class="font-label-caps text-label-caps text-zinc-400 hover:text-zinc-900 transition-colors">12</button>
+                </div>
+                <span class="material-symbols-outlined text-zinc-900 cursor-pointer hover:opacity-50" data-icon="chevron_right">chevron_right</span>
+            </div>
+        </main>
+    </div>
+
+    <Footer />
+</Layout>

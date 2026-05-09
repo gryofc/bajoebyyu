@@ -1,0 +1,25 @@
+---
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/' || pathname === '/index.html';
+const isCatalog = pathname.startsWith('/catalog');
+const isAbout = pathname.startsWith('/about');
+
+const activeClass = "font-['Inter'] uppercase tracking-[0.2em] text-[12px] font-medium text-zinc-900 dark:text-zinc-50 border-b border-zinc-900 dark:border-zinc-50 pb-1";
+const inactiveClass = "font-['Inter'] uppercase tracking-[0.2em] text-[12px] font-medium text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors duration-300";
+---
+<nav class="fixed top-0 w-full z-50 border-b border-zinc-900 dark:border-zinc-50 bg-white dark:bg-zinc-950 flex justify-between items-center h-20 px-8 md:px-16">
+<div class="flex-1 flex gap-8 items-center hidden md:flex">
+<a class={isHome ? activeClass : inactiveClass} href="/">HOME</a>
+<a class={isCatalog ? activeClass : inactiveClass} href="/catalog">COLLECTIONS</a>
+<a class={isAbout ? activeClass : inactiveClass} href="/about">ABOUT</a>
+</div>
+<div class="flex-none">
+<h1 class="text-2xl font-black tracking-[0.3em] text-zinc-900 dark:text-zinc-50 uppercase">BAJOEBYYU</h1>
+</div>
+<div class="flex-1 flex justify-end items-center gap-6">
+<div class="hidden lg:block font-['Inter'] uppercase tracking-[0.2em] text-[12px] font-medium text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors duration-300 cursor-pointer"><br></div>
+<span class="material-symbols-outlined text-zinc-900 dark:text-zinc-50 cursor-pointer hover:opacity-70 transition-opacity duration-300">search</span>
+<span class="material-symbols-outlined text-zinc-900 dark:text-zinc-50 cursor-pointer hover:opacity-70 transition-opacity duration-300">shopping_bag</span>
+<span class="material-symbols-outlined md:hidden text-zinc-900 dark:text-zinc-50">menu</span>
+</div>
+</nav>
