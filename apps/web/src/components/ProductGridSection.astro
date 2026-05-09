@@ -1,4 +1,10 @@
 ---
+import items from '../recipes/item.json';
+
+const topItems = items
+  .filter(item => item.sold_count != null)
+  .sort((a, b) => b.sold_count - a.sold_count)
+  .slice(0, 4);
 ---
 <section class="max-w-7xl mx-auto px-8 md:px-16 py-section-gap bg-background">
 <div class="flex justify-between items-end mb-16 border-b border-black/10 pb-8">
@@ -11,58 +17,28 @@
 </div>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- Product Card 1 -->
-<div class="product-card group cursor-pointer transition-transform duration-300 hover:-translate-y-2">
-<div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6 relative">
-<img class="w-full h-full object-cover grayscale" alt="A close-up studio shot of a high-end black heavyweight cotton oversized tee. The garment is presented on a minimalist stone pedestal under soft, directional gallery lighting that highlights the premium texture of the fabric. The aesthetic is clean, monochrome, and expensive, fitting the quiet luxury theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0LoEQaoNfLV5GlKiPsegCXK8gzuChLJs3CLZxgNP-27HMSlLGFrXHD9hc45ZlWhW-e9Yqqjd3qCy2DXHSXRQW6Tk73Xjs4lcNTNXjn1AqNjHapz-2atdiLSzumvBZF2ucpJCipzHSY6JQU3GXXZCeMXTpx-B6SA-IGGDHwkcCy2FdmVfFrqDte7CZooR4M2WsZBa4XBV_qUw8jFBeoN3700KVY86wn_ioab5lkLA_R2n8AlGk-JhOndw-M9TUlofKzGd1B9fmQkbx">
-<div class="absolute top-4 left-4 bg-black text-white px-3 py-1 font-label-caps text-[10px]">NEW</div>
-</div>
-<div class="space-y-1"><p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Essentials</p>
-<h4 class="font-headline-md text-body-lg uppercase">Oversized Tee</h4>
-<p class="font-body-md text-secondary mb-4">Rp 599.000</p>
-<div class="space-y-2">
-<a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-zinc-800 transition-colors" href="https://shopee.co.id" target="_blank">SHOP ON SHOPEE</a>
-<a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-black hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
-</div></div>
-</div>
-<!-- Product Card 2 -->
-<div class="product-card group cursor-pointer transition-transform duration-300 hover:-translate-y-2">
-<div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6">
-<img class="w-full h-full object-cover grayscale" alt="A minimalist photograph of a crisp white linen shirt with a mandarin collar, hanging on a thin black metal rack. The background is a clean white plaster wall, creating a high-contrast and airy light-mode feel. The lighting is bright and natural, emphasizing the light texture of the high-quality linen fabric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcpNcjKy1JelZRqWHFW12ENP_GRCd9dRo6Gwll6Rn3rxZfFoDMHzS6nWcLRvFlC90adtocVHBvFmKg2ETmSEeOwk4eNzO0gLR1p67_oj3Q0UvJNm1la1-VxPguRZfNcLktYnV-9XMNU687W1okyoqSc-V71xpomHC4f2zmJKe2fRE-yeFEH5_gOKppLax48dN_VwFMqqpmju2-3eVqSNFdHZ-Hs0Wp6ZVtqTzZFZqdxxRfJ0xwrgydouOgqjERp9OxlI2Eeu_R4ES_">
-</div>
-<div class="space-y-1"><p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Collections</p>
-<h4 class="font-headline-md text-body-lg uppercase">Linen Shirt</h4>
-<p class="font-body-md text-secondary mb-4">Rp 899.000</p>
-<div class="space-y-2">
-<a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-zinc-800 transition-colors" href="https://shopee.co.id" target="_blank">SHOP ON SHOPEE</a>
-<a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-black hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
-</div></div>
-</div>
-<!-- Product Card 3 -->
-<div class="product-card group cursor-pointer transition-transform duration-300 hover:-translate-y-2">
-<div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6">
-<img class="w-full h-full object-cover grayscale" alt="A high-end studio portrait of a grey knitted polo shirt made from premium merino wool. The shirt is displayed flat with architectural precision on a dark charcoal surface. Subtle rim lighting defines the collar and ribbed cuffs, creating a sophisticated and expensive atmosphere in a monochrome black-and-grey palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQi-6ACVFoJRPM-gYjZEHiu9PQxApFZKcGj1yoH13KSILcPzwWUUlZWqke4fBzVtC9tiTPGodq7UxbnTGOFelxai8wwPibbFO_9HOC_KNe2yCmhZ0nBenXCdQvsz9-0pRMD62E0HXFyRnENOeR1z0N_OFutzwpH3wzoEq0Eap9bCcnkJ8LJ4Nfz_ADBJMNNAymr2pXknvd0SaZhrFUs4rqPIYPP0DBs0aqHqdl5cNObLEr2YUfuqw2GbKZz9zuNNpW7Dy_t-w6qG1h">
-</div>
-<div class="space-y-1"><p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Essentials</p>
-<h4 class="font-headline-md text-body-lg uppercase">Essential Polo</h4>
-<p class="font-body-md text-secondary mb-4">Rp 749.000</p>
-<div class="space-y-2">
-<a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-zinc-800 transition-colors" href="https://shopee.co.id" target="_blank">SHOP ON SHOPEE</a>
-<a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-black hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
-</div></div>
-</div>
-<!-- Product Card 4 -->
-<div class="product-card group cursor-pointer transition-transform duration-300 hover:-translate-y-2">
-<div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6">
-<img class="w-full h-full object-cover grayscale" alt="A lifestyle product shot of premium black tailored trousers laid out on a minimalist white marble floor. A single shaft of sunlight hits the fabric, revealing the subtle sheen of high-quality wool. The composition is clean and asymmetric, emphasizing a quiet luxury aesthetic with extreme negative space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzdZr1kd1mY17Zzz_VrAACQTPEYJFPP4ApevNs64o4E2_IWGhG2PQ7HbrAIvfouyHnm3Vfj3uQHMCOc95OkLjLIgy8DKJvFAWAyAyCPLz442Yam4ZtPCZyC8VKs02kK3pJ78cXxmKrvinF7HMylh8j_BWu1k0aCfHNckthjZiY2SnDeWBUg__Sjm2pE3bflEABfQWHYX3VSaBffRfRW430RIr1vbB09xuHZvifRQ-wXe4CjWqQ33hcKH1o3EL49sGTysbcSW0TKF65">
-</div>
-<div class="space-y-1"><p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Tailoring</p>
-<h4 class="font-headline-md text-body-lg uppercase">Relaxed Trouser</h4>
-<p class="font-body-md text-secondary mb-4">Rp 1.299.000</p>
-<div class="space-y-2">
-<a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-zinc-800 transition-colors" href="https://shopee.co.id" target="_blank">SHOP ON SHOPEE</a>
-<a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-black hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
-</div></div>
-</div>
+{topItems.map((item) => (
+    <div class="product-card flex flex-col group cursor-pointer h-full hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-2 rounded-xl">
+        <div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6 relative rounded-lg">
+            <a href={item.url} target="_blank" class="block w-full h-full">
+                <img class="w-full h-full object-cover  transition-transform duration-700 hover:scale-105" alt={item.name} src={item.image_url} />
+            </a>
+            {item.isNew && (
+                <div class="absolute top-4 left-4 bg-white px-3 py-1 border border-zinc-900 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="font-label-caps text-[9px] font-bold text-zinc-900 tracking-widest">NEW ARRIVAL</span>
+                </div>
+            )}
+        </div>
+        <div class="space-y-1 flex-1 flex flex-col">
+            <p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">{item.category || "Item Sold : "+item.sold_count}</p>
+            <h4 class="font-headline-md text-body-lg uppercase">{item.name}</h4>
+            <p class="font-body-md text-[#000] mt-auto">Rp {new Intl.NumberFormat('en-US').format(item.price)}</p>
+        </div>
+        <div class="mt-auto pt-6 space-y-2">
+            <a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-[#EE4D2D] transition-colors" href={item.url} target="_blank">SHOP ON SHOPEE</a>
+            <a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-[#00AA5B] hover:border-[#00AA5B] hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
+        </div>
+    </div>
+))}
 </div>
 </section>

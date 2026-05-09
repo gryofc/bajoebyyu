@@ -1,6 +1,20 @@
 ---
 import "@workspace/ui/globals.css"
 import Analytics from '@vercel/analytics/astro';
+
+export interface Props {
+    title?: string;
+    description?: string;
+    ogImage?: string;
+    canonicalURL?: string;
+}
+
+const { 
+    title = "BAJOEBYYU | Oversized Streetwear Indonesia", 
+    description = "BAJOEBYYU: Oversize lokal karya anak bangsa. The vanguard of modern essentials offering high-quality oversized streetwear in Indonesia.",
+    ogImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBcNBc9kNkGe-clIbL3sLkf9__-76amiFbmyW2BfAJac4z1WF-MuSFvKzPlastTzoJJPGMfi8fe0noHn5jDUpiqzSTI36OGYMGY8jt18opRNdo0zqDVHeNUCff5I-R1OpobxD1e0ogTkXnmp5fD513euRLc0cShyJOTy0yLVgATYyWCD-TeIQa0Bua--dMbJK0vd1L__4jqtk85L47siOrYZr9rO5XNxHfmzGv32aeL1QVB6Z04d0Tvpi30_ubPif7pNjBtbi-fG_OD",
+    canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://bajoebyyu.com").href
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -18,7 +32,23 @@ import Analytics from '@vercel/analytics/astro';
     
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>BAJOEBYYU | THE VANGUARD OF MODERN ESSENTIALS</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
