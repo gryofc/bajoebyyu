@@ -23,5 +23,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@digi4care/astro-google-tagmanager": "^1.6.0"
+  }
 }
