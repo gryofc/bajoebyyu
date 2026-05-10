@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro"
+import TopNavBar from "../components/TopNavBar.astro"
+import Footer from "../components/Footer.astro"
+import items from "../recipes/item.json"
+---
+
+<Layout title="Catalogue Index | BAJOEBYYU" description="A comprehensive list of our current collections.">
+    <TopNavBar />
+    
+    <main class="pt-40 pb-32 max-w-7xl mx-auto px-8 md:px-16 min-h-screen">
+        <!-- Page Header -->
+        <header class="mb-24">
+            <h1 class="font-headline-lg text-[48px] font-semibold text-zinc-900 uppercase tracking-tighter mb-4">CATALOGUE INDEX</h1>
+            <p class="font-body-lg text-[18px] text-zinc-500 max-w-xl">A comprehensive list of our current collections and direct marketplace access.</p>
+        </header>
+
+        <!-- Product Table -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+            <div class="flex gap-8 border-b border-zinc-200 w-full md:w-auto overflow-x-auto">
+                <button class="font-label-caps text-[12px] font-semibold tracking-[0.15em] pb-4 text-zinc-900 border-b-2 border-zinc-900 transition-all duration-300 whitespace-nowrap">ALL</button>
+                <button class="font-label-caps text-[12px] font-semibold tracking-[0.15em] pb-4 text-zinc-500 hover:text-zinc-900 border-b-2 border-transparent hover:border-zinc-300 transition-all duration-300 whitespace-nowrap">TOPS</button>
+                <button class="font-label-caps text-[12px] font-semibold tracking-[0.15em] pb-4 text-zinc-500 hover:text-zinc-900 border-b-2 border-transparent hover:border-zinc-300 transition-all duration-300 whitespace-nowrap">BOTTOMS</button>
+                <button class="font-label-caps text-[12px] font-semibold tracking-[0.15em] pb-4 text-zinc-500 hover:text-zinc-900 border-b-2 border-transparent hover:border-zinc-300 transition-all duration-300 whitespace-nowrap">OUTERWEAR</button>
+            </div>
+            <div class="relative w-full md:w-80 group">
+                <input class="w-full bg-transparent border-t-0 border-x-0 border-b border-zinc-300 focus:border-zinc-900 focus:ring-0 font-label-caps text-[12px] font-semibold tracking-[0.15em] py-3 px-0 placeholder:text-zinc-400 transition-colors duration-300" placeholder="SEARCH CATALOGUE..." type="text"/>
+                <span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-zinc-900 transition-colors duration-300">search</span>
+            </div>
+        </div>
+        
+        <div class="w-full overflow-x-auto pb-8">
+            <table class="w-full text-left border-collapse border-b border-zinc-900 min-w-[800px]">
+                <thead>
+                    <tr class="border-y border-zinc-900">
+                        <th class="py-6 px-4 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900 w-16">#</th>
+                        <th class="py-6 px-4 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900">Product Name</th>
+                        <th class="py-6 px-4 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900">Price</th>
+                        <th class="py-6 px-4 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900">Shopee Link</th>
+                        <th class="py-6 px-4 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900">Tokopedia Link</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200">
+                    {items.map((item, index) => (
+                        <tr class="group hover:bg-zinc-100 transition-colors duration-200">
+                            <td class="py-8 px-4 font-body-md text-[16px] text-zinc-500">{String(index + 1).padStart(2, '0')}</td>
+                            <td class="py-8 px-4">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-20 bg-zinc-200 flex-shrink-0">
+                                        <img alt={item.name} class="w-full h-full object-cover " src={item.image_url}/>
+                                    </div>
+                                    <span class="font-body-md text-[16px] text-zinc-900 font-semibold tracking-tight uppercase">{item.name}</span>
+                                </div>
+                            </td>
+                            <td class="py-8 px-4 font-body-md text-[16px] text-zinc-900 font-medium">
+                                Rp {new Intl.NumberFormat('id-ID').format(item.price)}
+                            </td>
+                            <td class="py-8 px-4">
+                                <div class="flex items-center gap-4">
+                                    <a class="inline-flex items-center gap-2 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900 border-b border-zinc-300 hover:border-zinc-900 transition-all duration-300 pb-1 group-hover:gap-3" href={item.aff_url} rel="noopener noreferrer" target="_blank">
+                                        VIEW ON SHOPEE
+                                        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                                    </a>
+                                    <button class="copy-btn text-zinc-400 hover:text-zinc-900 transition-colors" data-url={item.aff_url} aria-label="Copy Shopee Link" title="Copy Link">
+                                        <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="py-8 px-4">
+                                <div class="flex items-center gap-4">
+                                    {item.tkp_url ? (
+                                        <>
+                                            <a class="inline-flex items-center gap-2 font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-900 border-b border-zinc-300 hover:border-zinc-900 transition-all duration-300 pb-1 group-hover:gap-3" href={item.tkp_url} rel="noopener noreferrer" target="_blank">
+                                                VIEW ON TOKOPEDIA
+                                                <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                                            </a>
+                                            <button class="copy-btn text-zinc-400 hover:text-zinc-900 transition-colors" data-url={item.tkp_url} aria-label="Copy Tokopedia Link" title="Copy Link">
+                                                <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <span class="font-label-caps text-[12px] font-semibold tracking-[0.15em] text-zinc-400">null</span>
+                                    )}
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const target = e.currentTarget as HTMLButtonElement;
+                const url = target.dataset.url;
+                if (url) {
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        const icon = target.querySelector('.material-symbols-outlined');
+                        if (icon) {
+                            icon.textContent = 'check';
+                            target.classList.remove('text-zinc-400');
+                            target.classList.add('text-emerald-600');
+                            setTimeout(() => {
+                                icon.textContent = 'content_copy';
+                                target.classList.add('text-zinc-400');
+                                target.classList.remove('text-emerald-600');
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy!', err);
+                    }
+                }
+            });
+        });
+    });
+</script>

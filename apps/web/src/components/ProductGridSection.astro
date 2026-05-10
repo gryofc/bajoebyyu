@@ -20,7 +20,7 @@ const topItems = items
 {topItems.map((item) => (
     <div class="product-card flex flex-col group cursor-pointer h-full hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-2 rounded-xl">
         <div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6 relative rounded-lg">
-            <a href={item.url} target="_blank" class="block w-full h-full">
+            <a href={item.aff_url} target="_blank" class="block w-full h-full">
                 <img class="w-full h-full object-cover  transition-transform duration-700 hover:scale-105" alt={item.name} src={item.image_url} />
             </a>
             {item.isNew && (
@@ -35,7 +35,7 @@ const topItems = items
             <p class="font-body-md text-[#000] mt-auto">Rp {new Intl.NumberFormat('en-US').format(item.price)}</p>
         </div>
         <div class="mt-auto pt-6 space-y-2">
-            <a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-[#EE4D2D] transition-colors" href={item.url} target="_blank">SHOP ON SHOPEE</a>
+            <a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-[#EE4D2D] transition-colors" href={item.aff_url} target="_blank">SHOP ON SHOPEE</a>
             <a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-[#00AA5B] hover:border-[#00AA5B] hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
         </div>
     </div>
