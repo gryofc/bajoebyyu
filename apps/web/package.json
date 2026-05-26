@@ -30,6 +30,7 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@eslint/js": "^9.39.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/bcryptjs": "^2.4.6",
