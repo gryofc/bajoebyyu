@@ -35,10 +35,10 @@
     "location": null,
     "is_mall": false,
     "currency": "IDR",
-    "original_price": null,
+    "original_price": 113050,
     "rating_count": null,
     "category": "Accessories",
-    "isNew": false,
+    "isNew": true,
     "tkp_url": null
   },
   {
@@ -77,10 +77,10 @@
     "location": null,
     "is_mall": false,
     "currency": "IDR",
-    "original_price": null,
+    "original_price": 143100,
     "rating_count": null,
     "category": "Tops",
-    "isNew": false,
+    "isNew": true,
     "tkp_url": null
   },
   {

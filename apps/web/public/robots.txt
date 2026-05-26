@@ -1,0 +1,16 @@
+# Allow all crawlers to index our public pages
+User-agent: *
+Allow: /
+Allow: /catalog
+Allow: /blog
+Allow: /list
+
+# Protect administrative and API endpoints from crawlers
+Disallow: /admin
+Disallow: /api/
+Disallow: /logout
+Disallow: /mashok
+
+# Tell search engines where our sitemaps are located
+Sitemap: https://bajoebyyu.my.id/sitemap-index.xml
+Sitemap: https://bajoebyyu.my.id/sitemap-0.xml

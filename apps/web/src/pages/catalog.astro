@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro"
 import TopNavBar from "../components/TopNavBar.astro"
 import Footer from "../components/Footer.astro"
 import { getItems } from "../lib/db";
+import { optimizeProductImage } from "../lib/image";
 
 const items = await getItems();
 
@@ -14,7 +15,7 @@ const collections = items.map((item) => {
         cat: item.category,
         price: item.price,
         isNew: item.isNew,
-        image: item.image_url,
+        image: optimizeProductImage(item.image_url),
         url : item.aff_url,
         tkp_url: item.tkp_url
     };

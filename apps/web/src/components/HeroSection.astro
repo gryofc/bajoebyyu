@@ -1,10 +1,16 @@
 ---
 import { Button } from "@workspace/ui/components/button"
+import { optimizeGoogleImage } from "../lib/image"
+
+const heroImageUrl = optimizeGoogleImage(
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuBcNBc9kNkGe-clIbL3sLkf9__-76amiFbmyW2BfAJac4z1WF-MuSFvKzPlastTzoJJPGMfi8fe0noHn5jDUpiqzSTI36OGYMGY8jt18opRNdo0zqDVHeNUCff5I-R1OpobxD1e0ogTkXnmp5fD513euRLc0cShyJOTy0yLVgATYyWCD-TeIQa0Bua--dMbJK0vd1L__4jqtk85L47siOrYZr9rO5XNxHfmzGv32aeL1QVB6Z04d0Tvpi30_ubPif7pNjBtbi-fG_OD",
+  1600
+);
 ---
 
 <section class="relative w-full h-[921px] flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
-<img class="w-full h-full object-cover grayscale brightness-90" alt="A cinematic, high-fashion lifestyle shot of a model wearing a structured monochrome wool coat, standing in a brutalist architectural setting with sharp shadows. The lighting is cold and atmospheric, emphasizing the 'Quiet Luxury' aesthetic. The overall color palette is restricted to deep blacks, slate greys, and stark whites, reflecting a minimalist and sophisticated mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcNBc9kNkGe-clIbL3sLkf9__-76amiFbmyW2BfAJac4z1WF-MuSFvKzPlastTzoJJPGMfi8fe0noHn5jDUpiqzSTI36OGYMGY8jt18opRNdo0zqDVHeNUCff5I-R1OpobxD1e0ogTkXnmp5fD513euRLc0cShyJOTy0yLVgATYyWCD-TeIQa0Bua--dMbJK0vd1L__4jqtk85L47siOrYZr9rO5XNxHfmzGv32aeL1QVB6Z04d0Tvpi30_ubPif7pNjBtbi-fG_OD">
+<img class="w-full h-full object-cover grayscale brightness-90" alt="A cinematic, high-fashion lifestyle shot of a model wearing a structured monochrome wool coat, standing in a brutalist architectural setting with sharp shadows. The lighting is cold and atmospheric, emphasizing the 'Quiet Luxury' aesthetic. The overall color palette is restricted to deep blacks, slate greys, and stark whites, reflecting a minimalist and sophisticated mood." src={heroImageUrl}>
 <div class="absolute inset-0 bg-black/20"></div>
 </div>
 <div class="relative z-10 text-center text-white px-margin-mobile max-w-4xl mx-auto">

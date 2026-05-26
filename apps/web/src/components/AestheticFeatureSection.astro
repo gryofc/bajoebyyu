@@ -1,11 +1,17 @@
 ---
 import { Button } from "@workspace/ui/components/button"
+import { optimizeGoogleImage } from "../lib/image"
+
+const textileImageUrl = optimizeGoogleImage(
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuCMQqllWbIHYs5OftTUi3jS3N4FtlPBIoJaZOZevXDSO11zOm72jsDV7z6VcJ9qQSetkUxhPdT-xDlrP8D-CH6HFsQSZX_AJ4OEXTu1QT5XinwsoA_AnTHDoj8P-kRgvpaLiUKsjwse_fEEj73V131JvswSvn0dBIesFD8LiqgzdpThcIylzOdphFJEg_dfqr9bMZr25p44y3h2ddSa2Zp4nQ3wKGPwFFkPxCdQ1_8ermvYvcH7yp8NOMWRGHO0qAb0STo90evCu-oo",
+  800
+);
 ---
 
 <section class="w-full bg-surface-container py-section-gap">
 <div class="max-w-7xl mx-auto px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 <div class="relative aspect-square md:aspect-[4/5] overflow-hidden">
-<img class="w-full h-full object-cover grayscale" alt="A monochromatic art photograph of stacked textile samples in various shades of grey and black. The focus is macro, showing the intricate weave and superior quality of the fibers. The lighting is soft and diffused, creating a serene, gallery-like atmosphere that underscores the brand's commitment to material excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMQqllWbIHYs5OftTUi3jS3N4FtlPBIoJaZOZevXDSO11zOm72jsDV7z6VcJ9qQSetkUxhPdT-xDlrP8D-CH6HFsQSZX_AJ4OEXTu1QT5XinwsoA_AnTHDoj8P-kRgvpaLiUKsjwse_fEEj73V131JvswSvn0dBIesFD8LiqgzdpThcIylzOdphFJEg_dfqr9bMZr25p44y3h2ddSa2Zp4nQ3wKGPwFFkPxCdQ1_8ermvYvcH7yp8NOMWRGHO0qAb0STo90evCu-oo">
+<img class="w-full h-full object-cover grayscale" alt="A monochromatic art photograph of stacked textile samples in various shades of grey and black. The focus is macro, showing the intricate weave and superior quality of the fibers. The lighting is soft and diffused, creating a serene, gallery-like atmosphere that underscores the brand's commitment to material excellence." src={textileImageUrl}>
 </div>
 <div class="space-y-8">
 <h3 class="font-display-xl text-headline-lg uppercase leading-tight">THE SILENT REVOLUTION OF FABRIC</h3>

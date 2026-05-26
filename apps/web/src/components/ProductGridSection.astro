@@ -1,5 +1,6 @@
 ---
 import items from '../recipes/item.json';
+import { optimizeProductImage } from '../lib/image';
 
 const topItems = items
   .filter(item => item.sold_count != null)
@@ -21,7 +22,7 @@ const topItems = items
     <div class="product-card flex flex-col group cursor-pointer h-full hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 p-2 rounded-xl">
         <div class="product-image-container aspect-[3/4] overflow-hidden bg-surface-container mb-6 relative rounded-lg">
             <a href={item.aff_url} target="_blank" class="block w-full h-full">
-                <img class="w-full h-full object-cover  transition-transform duration-700 hover:scale-105" alt={item.name} src={item.image_url} />
+                <img class="w-full h-full object-cover  transition-transform duration-700 hover:scale-105" alt={item.name} src={optimizeProductImage(item.image_url)} />
             </a>
             {item.isNew && (
                 <div class="absolute top-4 left-4 bg-white px-3 py-1 border border-zinc-900 opacity-0 group-hover:opacity-100 transition-opacity">
