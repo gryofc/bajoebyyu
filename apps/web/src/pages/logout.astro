@@ -1,0 +1,5 @@
+---
+// Clear the session cookie and redirect to /mashok
+Astro.cookies.delete("session", { path: "/" });
+return Astro.redirect("/mashok");
+---

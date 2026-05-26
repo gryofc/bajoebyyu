@@ -36,7 +36,11 @@ const topItems = items
         </div>
         <div class="mt-auto pt-6 space-y-2">
             <a class="block w-full text-center py-4 bg-black text-white font-label-caps text-[11px] tracking-widest hover:bg-[#EE4D2D] transition-colors" href={item.aff_url} target="_blank">SHOP ON SHOPEE</a>
-            <a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-[#00AA5B] hover:border-[#00AA5B] hover:text-white transition-all" href="https://tokopedia.com" target="_blank">GET IT ON TOKOPEDIA</a>
+            {item.tkp_url ? (
+                <a class="block w-full text-center py-4 bg-transparent border border-black text-black font-label-caps text-[11px] tracking-widest hover:bg-[#00AA5B] hover:border-[#00AA5B] hover:text-white transition-all" href={item.tkp_url} target="_blank">GET IT ON TOKOPEDIA</a>
+            ) : (
+                <button class="block w-full text-center py-4 bg-transparent border border-gray-300 text-gray-400 font-label-caps text-[11px] tracking-widest cursor-not-allowed w-full" disabled>GET IT ON TOKOPEDIA</button>
+            )}
         </div>
     </div>
 ))}

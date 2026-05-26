@@ -2,7 +2,9 @@
 import Layout from "../layouts/Layout.astro"
 import TopNavBar from "../components/TopNavBar.astro"
 import Footer from "../components/Footer.astro"
-import items from "../recipes/item.json"
+import { getItems } from "../lib/db"
+
+const items = await getItems();
 ---
 
 <Layout title="Catalogue Index | BAJOEBYYU" description="A comprehensive list of our current collections.">

@@ -1,0 +1,422 @@
+---
+import { getBlogs } from "../lib/db";
+import Layout from "../layouts/Layout.astro";
+import TopNavBar from "../components/TopNavBar.astro";
+import Footer from "../components/Footer.astro";
+
+const blogs = await getBlogs();
+// Public blog archive only renders published items
+const publishedBlogs = blogs.filter(b => b.status === 'Published');
+
+// Fallback premium items in case database is empty or no posts are published
+const fallbackBlogs = [
+  {
+    id: 1,
+    title: 'Evolusi Streetwear di Indonesia: Dari Komunitas Subkultur ke Kiblat Fashion',
+    category: 'THEORY',
+    content: 'Streetwear di Indonesia telah menempuh perjalanan panjang dari sekadar tren subkultur komunitas skateboard dan musik independen menjadi pilar utama industri fashion modern. Desain dengan siluet oversized, detail grafis minimalis, dan pesan orisinalitas kini mendominasi panggung gaya perkotaan. Artikel ini mengupas bagaimana brand lokal sukses memadukan estetika global dengan sensitivitas budaya nusantara, menciptakan identitas baru yang berani dan relevan.',
+    created_at: new Date('2026-05-22T14:00:00Z')
+  },
+  {
+    id: 2,
+    title: 'Minimalisme Brutalis: Mengapa Kaos Oversized Tetap Mendominasi Tren',
+    category: 'THEORY',
+    content: 'Tren oversized t-shirt bukan sekadar kenyamanan sementara, melainkan sebuah pernyataan estetika brutalism yang menekankan proporsi ekstrem dan kejujuran bentuk. Tanpa lekukan tubuh yang menonjol, pakaian oversized memberikan kebebasan bergerak sekaligus menciptakan siluet arsitektural yang kuat bagi pemakainya. Temukan alasan mengapa potongan longgar tetap menjadi raja di lemari pakaian minimalis Anda.',
+    created_at: new Date('2026-05-21T16:30:00Z')
+  },
+  {
+    id: 3,
+    title: 'Panduan Memilih Bahan Katun Heavyweight Terbaik untuk Kaos Streetwear Premium',
+    category: 'SUSTAINABILITY',
+    content: 'Kualitas pakaian streetwear kelas atas sangat ditentukan oleh pemilihan material kain. Kain katun heavyweight dengan gramasi berkisar antara 200 gsm hingga 240 gsm menawarkan struktur siluet boxy yang kokoh serta ketahanan luar biasa meskipun dicuci berulang kali. Ketahui perbedaan karakteristik pintalan benang combed dan carded agar Anda tidak salah berinvestasi pada produk fashion berkualitas premium.',
+    created_at: new Date('2026-05-20T11:15:00Z')
+  },
+  {
+    id: 4,
+    title: 'Konstruksi Ruang Ganti Minimalis: Merancang Wardrobe Estetik dengan Konsep AD7ERclo',
+    category: 'INTERIORS',
+    content: 'Menata ruang penyimpanan pakaian pribadi membutuhkan pendekatan arsitektural yang matang untuk menghadirkan ketenangan visual. Melalui integrasi material beton ekspos, gantungan stainless steel industri, serta pencahayaan linear yang lembut, ruang ganti Anda dapat diubah menjadi galeri seni mini. Pelajari panduan praktis penataan baju dengan skema warna terorganisasi demi kepuasan visual harian.',
+    created_at: new Date('2026-05-19T09:45:00Z')
+  },
+  {
+    id: 5,
+    title: 'Eksplorasi Monokrom dalam Fotografi Streetwear Jalanan Jakarta',
+    category: 'PHOTOGRAPHY',
+    content: 'Fotografi streetwear monokrom adalah metode terbaik untuk menangkap kontras tajam antara siluet pakaian modern dengan brutalnya arsitektur kota Jakarta. Cahaya matahari tropis yang terik menciptakan bayangan geometris tegas pada dinding beton galeri dan gedung tua, menonjolkan tekstur pakaian tanpa distraksi warna. Mari pelajari teknik komposisi shadow and light untuk memperkuat portofolio fashion editorial Anda.',
+    created_at: new Date('2026-05-18T17:20:00Z')
+  },
+  {
+    id: 6,
+    title: 'Slow Fashion di Indonesia: Langkah Nyata Menuju Industri Gaya yang Berkelanjutan',
+    category: 'SUSTAINABILITY',
+    content: 'Konsumsi pakaian yang cepat rusak membebani kelestarian bumi kita. Konsep slow fashion hadir mengajak kita semua untuk memilih kualitas di atas kuantitas. Dengan memproduksi pakaian dalam volume kecil, menggunakan bahan serat alami organik yang ramah lingkungan, serta memastikan kesejahteraan pekerja lokal, industri kreatif tanah air kini bergeser menuju era fashion yang lebih bertanggung jawab dan etis.',
+    created_at: new Date('2026-05-17T10:00:00Z')
+  },
+  {
+    id: 7,
+    title: 'Psikologi Warna Hitam: Kekuatan Tersembunyi dalam Desain Busana Avant-Garde',
+    category: 'THEORY',
+    content: 'Warna hitam melambangkan misteri, otoritas, dan keheningan mutlak. Dalam ranah mode avant-garde, ketiadaan warna memaksa mata untuk sepenuhnya fokus pada detail konstruksi jahitan, tekstur kain, dan keunikan siluet potongan baju. Pahami mengapa desainer legendaris dunia selalu memilih palet hitam untuk menyampaikan pesan-pesan filosofis yang paling mendalam.',
+    created_at: new Date('2026-05-16T14:10:00Z')
+  },
+  {
+    id: 8,
+    title: 'Menghidupkan Kembali Estetika Brutalisme dalam Arsitektur Ritel Fashion Modern',
+    category: 'INTERIORS',
+    content: 'Brutalisme arsitektur yang mengandalkan kejujuran tekstur beton mentah kini menjadi elemen interior terfavorit bagi butik ritel streetwear global. Suasana klinis, dingin, dan luas memberikan ruang bagi koleksi pakaian untuk tampil menonjol sebagai fokus utama pameran. Temukan rahasia di balik perpaduan material semen ekspos, kaca, dan logam dalam melahirkan pengalaman belanja premium.',
+    created_at: new Date('2026-05-15T11:30:00Z')
+  },
+  {
+    id: 9,
+    title: 'Seni Bermain Siluet: Oversized Outerwear untuk Proporsi Tubuh Asia',
+    category: 'THEORY',
+    content: 'Menggunakan luaran bermodel oversized sering kali menjadi tantangan tersendiri bagi orang Asia dengan postur tubuh sedang. Kunci utamanya terletak pada teknik layering dan keseimbangan proporsi tubuh atas dan bawah. Memadukan mantel bersiluet boxy dengan celana bersiluet lurus (straight-cut pants) akan memberikan ilusi tinggi badan yang seimbang sekaligus mempertahankan impresi gaya street fashion yang modern.',
+    created_at: new Date('2026-05-14T15:50:00Z')
+  },
+  {
+    id: 10,
+    title: 'Fotografi Lookbook: Teknik Pencahayaan Studio untuk Produk Fashion Monokrom',
+    category: 'PHOTOGRAPHY',
+    content: 'Menciptakan lookbook komersial yang memikat memerlukan kontrol pencahayaan yang sangat presisi untuk menonjolkan keunikan garmen monokromatik. Penggunaan teknik softbox searah dan reflektor abu-abu dapat memunculkan gradasi gelap terang yang dramatis pada lipatan pakaian hitam and putih. Dapatkan panduan lengkap mengatur setup lighting studio agar detail produk Anda terlihat tajam dan profesional.',
+    created_at: new Date('2026-05-13T13:20:00Z')
+  },
+  {
+    id: 11,
+    title: 'Pentingnya Upcycling: Mengubah Sisa Bahan Katun Menjadi Aksesori Premium',
+    category: 'SUSTAINABILITY',
+    content: 'Upcycling adalah seni mentransformasikan limbah kain produksi menjadi barang baru dengan nilai estetika yang jauh lebih tinggi. Daripada membiarkan potongan kain katun heavyweight terbuang di tempat pembuangan akhir, pengrajin lokal mendesain ulang sisa bahan menjadi tas jinjing minimalis, topi bucket serbaguna, hingga strap kamera. Inilah perwujudan nyata sirkular ekonomi dalam dunia fashion kreatif.',
+    created_at: new Date('2026-05-12T09:10:00Z')
+  },
+  {
+    id: 12,
+    title: 'Desain Interior Butik Minimalis: Menghadirkan Suasana Galeri Seni di Ruang Ritel',
+    category: 'INTERIORS',
+    content: 'Showroom fashion modern bukan lagi sekadar tempat bertransaksi jual beli, melainkan ruang kontemplasi artistik bagi para pelanggan. Dengan meminimalkan jumlah gantungan baju dan memanfaatkan konsep pencahayaan museum, setiap pakaian yang digantung diperlakukan layaknya karya seni berharga tinggi. Simak filosofi desain ritel modern yang mengutamakan kualitas pengalaman spasial.',
+    created_at: new Date('2026-05-11T16:40:00Z')
+  },
+  {
+    id: 13,
+    title: 'Sejarah Gaya Cargo Pants: Dari Perlengkapan Militer Hingga Ikon Streetwear',
+    category: 'THEORY',
+    content: 'Celana kargo yang awalnya dirancang untuk kebutuhan prajurit militer Inggris pada dekade 1930-an kini telah berevolusi menjadi salah satu fashion item wajib bagi pecinta streetwear modern. Fleksibilitas kantong utilitas dipadukan dengan material katun ripstop premium menciptakan fungsionalitas tingkat tinggi yang sangat dicintai oleh generasi muda yang aktif di area perkotaan.',
+    created_at: new Date('2026-05-10T10:15:00Z')
+  },
+  {
+    id: 14,
+    title: 'Evolusi Kultur Sneakers dalam Melengkapi Estetika Oversized Fit',
+    category: 'THEORY',
+    content: 'Sneakers tidak pernah bisa dipisahkan dari perkembangan kultur pakaian streetwear global. Sepatu dengan sol tebal (chunky sneakers) atau siluet klasik minimalis berbahan kulit premium bertindak sebagai jangkar visual yang sempurna untuk menyangga potongan celana longgar. Temukan panduan praktis memadukan model sepatu kasual favorit demi menyempurnakan outfit oversized harian Anda.',
+    created_at: new Date('2026-05-09T14:00:00Z')
+  },
+  {
+    id: 15,
+    title: 'Bagaimana Cara Merawat Pakaian Katun Heavyweight Agar Awet dan Tidak Menyusut',
+    category: 'SUSTAINABILITY',
+    content: 'Membeli kaos katun premium berkualitas tinggi adalah langkah investasi gaya jangka panjang, namun perawatan yang salah dapat merusak struktur serat kain. Gunakan air dingin saat mencuci, hindari mesin pengering bersuhu panas tinggi, dan jemur pakaian secara horizontal untuk menghindari peregangan bahu baju. Rawat koleksi katun heavyweight kesayangan Anda agar tetap kokoh bertahun-tahun.',
+    created_at: new Date('2026-05-08T08:30:00Z')
+  },
+  {
+    id: 16,
+    title: 'Menangkap Karakter Kain Melalui Lensa Makro: Fotografi Detail Tekstil Fashion',
+    category: 'PHOTOGRAPHY',
+    content: 'Kualitas kerajinan tangan dari brand premium sering kali tersembunyi pada kerapatan tenunan benang dan presisi jahitan tepinya. Melalui teknik fotografi makro beresolusi tinggi, kita dapat mengekspos kemewahan tekstur bahan linen organik atau kelembutan fleece premium secara dramatis. Artikel edukatif ini menyajikan tips makrofotografi untuk menaikkan nilai estetika visual lookbook digital Anda.',
+    created_at: new Date('2026-05-07T11:20:00Z')
+  },
+  {
+    id: 17,
+    title: 'Kombinasi Tekstur: Memadukan Heavy Linen dengan Katun Organik Minimalis',
+    category: 'SUSTAINABILITY',
+    content: 'Bermain dengan kontras permukaan kain adalah teknik rahasia dalam menciptakan gaya monokrom yang dinamis dan tidak membosankan. Serat kasar alami dari kain heavy linen berpadu sangat selaras dengan kehalusan kaos katun organik yang lembut. Kombinasi dua material ramah lingkungan ini menawarkan kesejukan optimal bagi tubuh sekaligus memperkaya dimensi visual busana kasual Anda.',
+    created_at: new Date('2026-05-06T15:45:00Z')
+  },
+  {
+    id: 18,
+    title: 'Filosofi Keheningan Spasial: Menghadirkan Suasana Tenang dalam Desain Showroom',
+    category: 'INTERIORS',
+    content: 'Desain interior yang terlalu ramai dapat menimbulkan kecemasan sensorik bagi pengunjung toko ritel. Melalui penerapan prinsip arsitektur Zen Jepang dan minimalisme Barat, perancang ruangan berusaha menciptakan showroom berdesain bersih dengan langit-langit tinggi dan sekat tipis. Keheningan spasial ini mengundang konsumen untuk berinteraksi secara intim dengan setiap helai pakaian.',
+    created_at: new Date('2026-05-05T13:10:00Z')
+  },
+  {
+    id: 19,
+    title: 'Estetika Streetwear Retro: Sentuhan Desain Vintage dalam Busana Modern AD7ERclo',
+    category: 'THEORY',
+    content: 'Elemen retro seperti potongan kerah lebar, efek washed pada kain denim, serta palet warna pudar kembali diminati oleh para desainer pakaian modern. Estetika ini digabungkan secara presisi dengan potongan geometris masa kini untuk menciptakan nostalgia berbalut kemewahan kontemporer. Pelajari cara mengadopsi tren vintage streetwear ke dalam gaya berpakaian urban Anda.',
+    created_at: new Date('2026-05-04T10:00:00Z')
+  },
+  {
+    id: 20,
+    title: 'Panduan Menciptakan Palet Kapsul Monokrom Sempurna untuk Gaya Berbusana Sehari-hari',
+    category: 'THEORY',
+    content: 'Konsep lemari kapsul (capsule wardrobe) mengajarkan kita untuk hidup secara efisien dengan memiliki sedikit pakaian yang mudah dipadupadankan. Fokus pada kombinasi warna netral seperti hitam, abu-abu, arang (charcoal), dan putih pudar memudahkan Anda berpakaian dengan cepat setiap pagi tanpa mengorbankan ketajaman gaya berpakaian. Inilah panduan menyusun palet kapsul terbaik.',
+    created_at: new Date('2026-05-03T09:00:00Z')
+  }
+];
+
+const displayBlogs = publishedBlogs.length > 0 ? publishedBlogs : fallbackBlogs;
+
+// Select featured item (first published) as Hero post
+const featuredPost = displayBlogs[0];
+// Rest of the list goes to the blog grid below
+const gridPosts = displayBlogs.slice(1);
+
+// Map categories to modern visual luxury architectural photographs
+const categoryImages: Record<string, string> = {
+  'THEORY': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGR0Xdn3J3l8kY0_ei1lOVcsUZGkqBAZ9XbnF_NctSkQIKyMjrREFBvoJ48_e7Yg5Dern7EqziW1kCWGkpP725qrg07bfhObKoGLGQJu94Z88ra1K1e7ZbLyWTP9_2dYosIFCRSj5wDbenh_kRWzx6H6MsyyefubT415GZTALPs0xDotw19yTQjci7x-GsQv-a4uKXHZT-J7AK_tpMHJq8Dxo02a_CQmuuaG8DDsk-35lg_0aVp1Rr7HZ76JV6UMkxzIChXzph3R6x',
+  'INTERIORS': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDh0By7XbkQSVSkxXGP8KCKOW8Nu3sZt4BlOUCULNXIfbbubpsFFYoToCbZOTp1oasq8fdVOrymdXQ4x2fQFNER3aFoO7DD-PMUenkwzFCzd-oWUlrbdxDYnUrTshdHuA3CNE6-mRju65f_s6zPdQsM8nUbCXqXC9xJ7scilFoyprqsqt6fk13XRFLtzDOSA2M5Wz-fp515pAS7CGfXw38ph53tMGJ9lHoTNqVolg0zdddbtx1NaMGSlr_4QM5OOc2mmpiOIeoYo3ke',
+  'PHOTOGRAPHY': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAmNiwkoiSWTCm6mk9R3EP9PQoFOHRug3DuxOJqqlep3gOpq_D8t7-V5MXotl47w4G4xw-MDDar-EOUcYWkHeomoxDjvscLkHA991Gnq0aaXRy8Xn3WSzt7X9HmKayCA50Zju9L6bucJQqsFVhCHJ1do6JS6e-Fab5KpBy4X1Qzf2YriA8pQrTg06amV9lO7GM4CaDLTkuFNok_PMDr40WukDBWerCNjR6_TQ7OlIC-7mbEx4yCBejgLWJpg7uPhqCNG3hoPpSXNvW8',
+  'SUSTAINABILITY': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBqmQsYDTB_w4HNB5Fl-DEt7JgsRa1YIElOzX6tp1ZLKY9EwSNP7wPWm6d4Hq90Vn4HaHnfwlvZn9AGZqNni5WkOQ-VNPjNkxmz_QyBAmTdL4klS_Ky2SlXmReyzOLrU4f67zXKVjeL1Z1510EHqJGt_-5uD6wvziNAlyWTGTM_WfJUwgjdl15AUEDzRmf9qobTHFfiEOYGIky2aheqOuixVscBk8rIs3gDHhsEoHgv7-UtfoQnOM8k_M1Iw4w2VtG2XkZsBepcWKSq',
+  // Database seeded categories support
+  'BLOG POST': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAmNiwkoiSWTCm6mk9R3EP9PQoFOHRug3DuxOJqqlep3gOpq_D8t7-V5MXotl47w4G4xw-MDDar-EOUcYWkHeomoxDjvscLkHA991Gnq0aaXRy8Xn3WSzt7X9HmKayCA50Zju9L6bucJQqsFVhCHJ1do6JS6e-Fab5KpBy4X1Qzf2YriA8pQrTg06amV9lO7GM4CaDLTkuFNok_PMDr40WukDBWerCNjR6_TQ7OlIC-7mbEx4yCBejgLWJpg7uPhqCNG3hoPpSXNvW8',
+  'PRODUCT UPDATE': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDh0By7XbkQSVSkxXGP8KCKOW8Nu3sZt4BlOUCULNXIfbbubpsFFYoToCbZOTp1oasq8fdVOrymdXQ4x2fQFNER3aFoO7DD-PMUenkwzFCzd-oWUlrbdxDYnUrTshdHuA3CNE6-mRju65f_s6zPdQsM8nUbCXqXC9xJ7scilFoyprqsqt6fk13XRFLtzDOSA2M5Wz-fp515pAS7CGfXw38ph53tMGJ9lHoTNqVolg0zdddbtx1NaMGSlr_4QM5OOc2mmpiOIeoYo3ke',
+  'STOCK UPDATE': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBqmQsYDTB_w4HNB5Fl-DEt7JgsRa1YIElOzX6tp1ZLKY9EwSNP7wPWm6d4Hq90Vn4HaHnfwlvZn9AGZqNni5WkOQ-VNPjNkxmz_QyBAmTdL4klS_Ky2SlXmReyzOLrU4f67zXKVjeL1Z1510EHqJGt_-5uD6wvziNAlyWTGTM_WfJUwgjdl15AUEDzRmf9qobTHFfiEOYGIky2aheqOuixVscBk8rIs3gDHhsEoHgv7-UtfoQnOM8k_M1Iw4w2VtG2XkZsBepcWKSq'
+};
+
+function getBlogImage(category: string): string {
+  const normCat = category.toUpperCase().trim();
+  return categoryImages[normCat] || categoryImages['THEORY'];
+}
+
+---
+
+<Layout title="BAJOEBYYU | Perspectives" description="BAJOEBYYU perspectives and archives: slow fashion, brutalist design, minimal interiors, and streetwear theory.">
+    <TopNavBar />
+    
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .border-b-1 { border-bottom-width: 1px; }
+        .border-t-1 { border-top-width: 1px; }
+        .border-1 { border-width: 1px; }
+    </style>
+
+    <main class="max-w-[1440px] mx-auto pt-20">
+    <!-- Featured Post (Hero) -->
+    {featuredPost && (
+        <section class="flex flex-col md:flex-row w-full h-[819px] bg-surface overflow-hidden border-b border-primary" id="featured-hero-section" data-category={featuredPost.category}>
+            <div class="w-full md:w-1/2 h-full relative group">
+                <img alt={featuredPost.title} class="w-full h-full object-cover grayscale brightness-95 group-hover:brightness-100 transition-all duration-700" src={getBlogImage(featuredPost.category)} />
+            </div>
+            <div class="w-full md:w-1/2 flex flex-col justify-center px-margin-desktop py-20 bg-surface">
+                <span class="font-label-caps text-label-caps text-zinc-400 mb-6 tracking-[0.2em]">{featuredPost.category.toUpperCase()}</span>
+                <h1 class="font-display-xl text-headline-lg lg:text-display-l mb-0 leading-tight tracking-tight uppercase">{featuredPost.title}</h1>
+                <p class="font-body-lg text-body-lg text-black mb-12 max-w-md line-clamp-4">
+                    {featuredPost.content 
+                        ? featuredPost.content.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim() 
+                        : "An exploration of spatial aesthetic and administrative design precision by AD7ERclo."}
+                </p>
+                <div>
+                    <button class="read-blog-btn inline-flex items-center gap-4 group cursor-pointer bg-black text-white hover:bg-neutral-800 font-label-caps text-[11px] tracking-widest uppercase px-8 transition-all duration-200" 
+                            data-id={featuredPost.id} 
+                            data-title={featuredPost.title} 
+                            data-category={featuredPost.category} 
+                            data-content={featuredPost.content || ''} 
+                            data-date={new Date(featuredPost.created_at || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}>
+                        <span>READ MORE</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-2 transition-transform duration-300">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    )}
+
+    <!-- Editorial Intro Separator -->
+    <div class="px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-6 border-b border-primary">
+        <p class="font-label-caps text-label-caps text-secondary">ARCHIVES / VOL 04</p>
+        <div class="flex flex-wrap justify-center gap-8" id="blog-nav-filters">
+            <button class="blog-nav-filter-btn font-label-caps text-label-caps text-zinc-900 border-b border-zinc-900 pb-1 font-bold transition-all duration-200 cursor-pointer" data-filter="all">All</button>
+            <button class="blog-nav-filter-btn font-label-caps text-label-caps text-zinc-400 border-b border-transparent pb-1 transition-all duration-200 cursor-pointer hover:text-zinc-900" data-filter="Theory">Theory</button>
+            <button class="blog-nav-filter-btn font-label-caps text-label-caps text-zinc-400 border-b border-transparent pb-1 transition-all duration-200 cursor-pointer hover:text-zinc-900" data-filter="Interiors">Interiors</button>
+            <button class="blog-nav-filter-btn font-label-caps text-label-caps text-zinc-400 border-b border-transparent pb-1 transition-all duration-200 cursor-pointer hover:text-zinc-900" data-filter="Photography">Photography</button>
+            <button class="blog-nav-filter-btn font-label-caps text-label-caps text-zinc-400 border-b border-transparent pb-1 transition-all duration-200 cursor-pointer hover:text-zinc-900" data-filter="Sustainability">Sustainability</button>
+        </div>
+        <p class="font-label-caps text-label-caps text-secondary">EST. 2024</p>
+    </div>
+
+    <!-- Blog Grid -->
+    <section class="px-margin-desktop py-section-gap">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="blog-grid-container">
+            {gridPosts.length === 0 ? (
+                <div class="col-span-full text-center py-20 border border-dashed border-outline-variant opacity-60">
+                    <p class="font-label-caps text-label-caps text-secondary">NO ADDITIONAL ARCHIVES CURRENTLY PUBLISHED</p>
+                </div>
+            ) : (
+                gridPosts.map((post) => (
+                    <div class="group cursor-pointer blog-grid-card read-blog-btn flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" data-category={post.category} data-id={post.id} data-title={post.title} data-content={post.content || ''} data-date={new Date(post.created_at || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}>
+                        <div class="aspect-[4/5] mb-6 overflow-hidden bg-surface-container rounded-lg">
+                            <img alt={post.title} class="w-full h-full object-cover grayscale group-hover:grayscale-0 hover:scale-105 transition-all duration-700 ease-out" src={getBlogImage(post.category)} />
+                        </div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-label-caps text-[9px] text-zinc-400 tracking-widest">{post.category.toUpperCase()}</span>
+                            <span class="font-label-caps text-[9px] text-zinc-400 tracking-widest">
+                                {new Date(post.created_at || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-[18px] text-zinc-900 uppercase tracking-tight line-clamp-2 min-h-[3.25rem] group-hover:underline decoration-1 underline-offset-4 leading-tight">{post.title}</h3>
+                        <p class="font-body-md text-xs text-zinc-500 line-clamp-4 mt-3 leading-relaxed">
+                            {post.content 
+                                ? post.content.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim() 
+                                : "An exploration of subculture styling, structural aesthetics, and design precision."}
+                        </p>
+                        <div class="mt-auto pt-6">
+                            <span class="font-label-caps text-[10px] font-bold text-zinc-900 border-b border-zinc-900 pb-0.5 group-hover:text-zinc-500 group-hover:border-zinc-500 transition-all uppercase tracking-widest">READ MORE</span>
+                        </div>
+                    </div>
+                ))
+            )}
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="w-full border-t border-b border-primary py-section-gap px-margin-desktop flex flex-col items-center text-center">
+        <span class="font-label-caps text-label-caps text-secondary mb-8">NEWSLETTER</span>
+        <h2 class="font-headline-lg text-headline-lg mb-12 uppercase tracking-tight">Join the Internal Perspective</h2>
+        <div class="w-full max-w-xl flex flex-col md:flex-row gap-4">
+            <input class="flex-1 bg-transparent border-b border-primary py-4 font-label-caps text-label-caps focus:outline-none focus:border-secondary transition-colors placeholder:text-secondary-fixed-dim" placeholder="EMAIL ADDRESS" type="email"/>
+            <button class="bg-primary text-on-primary px-12 py-4 font-label-caps text-label-caps hover:bg-secondary transition-colors active:opacity-80 cursor-pointer">SUBSCRIBE</button>
+        </div>
+        <p class="mt-8 font-label-caps text-label-caps text-secondary opacity-40">BY SUBSCRIBING YOU AGREE TO OUR TERMS OF SERVICE.</p>
+    </section>
+
+    <!-- Show Blog Modal Overlay -->
+    <div id="show-blog-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white border border-zinc-900 w-full max-w-2xl p-10 relative flex flex-col transform translate-y-4 transition-transform duration-300 max-h-[85vh] overflow-y-auto" id="show-modal-container">
+            <!-- Close Button -->
+            <button id="close-show-modal" class="absolute top-6 right-6 text-zinc-500 hover:text-zinc-950 transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-[24px]">close</span>
+            </button>
+            
+            <div class="mb-6">
+                <span id="show-blog-category" class="font-label-caps text-[10px] text-zinc-500 uppercase tracking-[0.2em]">CATEGORY</span>
+            </div>
+            
+            <h3 id="show-blog-title" class="font-headline-md text-[28px] uppercase tracking-tight mb-4 leading-tight text-zinc-900">Blog Entry Title</h3>
+            
+            <p id="show-blog-date" class="font-label-caps text-[10px] text-zinc-400 uppercase tracking-widest mb-8">Published on May 22, 2026</p>
+            
+            <div class="border-t border-zinc-900 pt-8">
+                <div id="show-blog-content" class="font-body-md text-zinc-900 opacity-90 leading-relaxed whitespace-pre-wrap prose prose-zinc max-w-none">Content of the blog post...</div>
+            </div>
+            
+            <div class="flex justify-end pt-8 mt-8 border-t border-zinc-200">
+                <button type="button" id="close-show-modal-btn" class="border border-zinc-900 hover:bg-zinc-100 text-zinc-900 font-label-caps text-[10px] tracking-widest uppercase px-6 py-3 transition-colors cursor-pointer">
+                    Close Article
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<Footer />
+
+<script is:inline>
+    // Category Filtering for Public Blog
+    const navFilters = document.querySelectorAll('.blog-nav-filter-btn');
+    const blogCards = document.querySelectorAll('.blog-grid-card');
+    const heroSection = document.getElementById('featured-hero-section');
+
+    const filterMap = {
+        'all': ['all'],
+        'theory': ['theory', 'blog post'],
+        'interiors': ['interiors', 'product update'],
+        'sustainability': ['sustainability', 'stock update'],
+        'photography': ['photography']
+    };
+
+    if (navFilters.length > 0) {
+        navFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active classes
+                navFilters.forEach(b => {
+                    b.classList.remove('text-zinc-900', 'border-zinc-900', 'font-bold');
+                    b.classList.add('text-zinc-400', 'border-transparent');
+                });
+
+                // Add active classes to current button
+                btn.classList.add('text-zinc-900', 'border-zinc-900', 'font-bold');
+                btn.classList.remove('text-zinc-400', 'border-transparent');
+
+                const filterValue = btn.getAttribute('data-filter').toLowerCase();
+
+                if (filterValue === 'all') {
+                    if (heroSection) heroSection.style.display = '';
+                    blogCards.forEach(card => card.style.display = '');
+                } else {
+                    const allowedCats = filterMap[filterValue] || [];
+
+                    // Filter Hero Section
+                    if (heroSection) {
+                        const heroCat = heroSection.getAttribute('data-category').toLowerCase();
+                        if (allowedCats.includes(heroCat)) {
+                            heroSection.style.display = '';
+                        } else {
+                            heroSection.style.display = 'none';
+                        }
+                    }
+
+                    // Filter Grid Cards
+                    blogCards.forEach(card => {
+                        const cardCat = card.getAttribute('data-category').toLowerCase();
+                        if (allowedCats.includes(cardCat)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    // Public Blog Detail Preview Modal Interaction
+    const showModal = document.getElementById('show-blog-modal');
+    const showModalContainer = document.getElementById('show-modal-container');
+    const closeShowBtn = document.getElementById('close-show-modal');
+    const closeShowBtn2 = document.getElementById('close-show-modal-btn');
+
+    function openShowModal(btn) {
+        const title = btn.getAttribute('data-title');
+        const category = btn.getAttribute('data-category');
+        const content = btn.getAttribute('data-content');
+        const date = btn.getAttribute('data-date');
+
+        const showTitle = document.getElementById('show-blog-title');
+        const showCategory = document.getElementById('show-blog-category');
+        const showContent = document.getElementById('show-blog-content');
+        const showDate = document.getElementById('show-blog-date');
+
+        if (showTitle) showTitle.textContent = title || '';
+        if (showCategory) showCategory.textContent = (category || '').toUpperCase();
+        if (showContent) showContent.innerHTML = content || 'No content provided.';
+        if (showDate) showDate.textContent = `PUBLISHED ON ${date || 'UNKNOWN'}`;
+
+        if (showModal) {
+            showModal.classList.remove('opacity-0', 'pointer-events-none');
+            showModal.classList.add('opacity-100');
+            showModalContainer.classList.remove('translate-y-4');
+            showModalContainer.classList.add('translate-y-0');
+        }
+    }
+
+    function closeShowModal() {
+        if (showModal) {
+            showModal.classList.remove('opacity-100');
+            showModal.classList.add('opacity-0', 'pointer-events-none');
+            showModalContainer.classList.remove('translate-y-0');
+            showModalContainer.classList.add('translate-y-4');
+        }
+    }
+
+    document.querySelectorAll('.read-blog-btn').forEach(btn => {
+        btn.addEventListener('click', () => openShowModal(btn));
+    });
+
+    if (closeShowBtn) closeShowBtn.addEventListener('click', closeShowModal);
+    if (closeShowBtn2) closeShowBtn2.addEventListener('click', closeShowModal);
+    if (showModal) {
+        showModal.addEventListener('click', (e) => {
+            if (e.target === showModal) {
+                closeShowModal();
+            }
+        });
+    }
+</script>
+</Layout>

@@ -1,0 +1,281 @@
+---
+import { verifyUser } from "../lib/auth";
+
+let errorMessage = "";
+let successMessage = "";
+
+// Check if user is already logged in (GET requests only to allow POST success notifications)
+const sessionCookie = Astro.cookies.get("session");
+if (sessionCookie && Astro.request.method === "GET") {
+  return Astro.redirect("/admin");
+}
+
+if (Astro.request.method === "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    const username = formData.get("username")?.toString() || "";
+    const password = formData.get("password")?.toString() || "";
+
+    if (!username || !password) {
+      errorMessage = "PLEASE ENTER BOTH USERNAME AND PASSWORD.";
+    } else {
+      const result = await verifyUser(username, password);
+      if (result.success) {
+        Astro.cookies.set("session", username, {
+          path: "/",
+          httpOnly: true,
+          secure: true,
+          maxAge: 60 * 60 * 24 * 7, // 1 week
+          sameSite: "lax"
+        });
+        
+        successMessage = `WELCOME BACK, ${username.toUpperCase()}! REDIRECTING...`;
+      } else {
+        errorMessage = result.error?.toUpperCase() || "INVALID USERNAME OR PASSWORD.";
+      }
+    }
+  } catch (error: any) {
+    errorMessage = "AN UNEXPECTED ERROR OCCURRED. PLEASE TRY AGAIN.";
+    console.error("[Login Error]", error);
+  }
+}
+---
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AD7ERclo | Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config" is:inline>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f9f9f9",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#464747",
+                        "error": "#ba1a1a",
+                        "primary": "#000000",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-tint": "#5e5e5e",
+                        "primary-fixed": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface": "#1b1b1b",
+                        "tertiary-fixed-dim": "#c7c6c6",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary-container": "#848484",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-container": "#eeeeee",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-fixed-variant": "#474747",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "outline": "#7e7576",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1b1b1b",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed": "#e2e2e2",
+                        "outline-variant": "#cfc4c5",
+                        "inverse-primary": "#c6c6c6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#000000",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-container": "#616363",
+                        "on-primary-fixed": "#1b1b1b",
+                        "primary-container": "#1b1b1b",
+                        "on-surface-variant": "#4c4546",
+                        "background": "#f9f9f9",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-dim": "#dadada",
+                        "inverse-surface": "#303030",
+                        "tertiary-container": "#1b1c1c",
+                        "on-primary-container": "#848484",
+                        "tertiary-fixed": "#e4e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "128px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "container-max-width": "1440px",
+                        "unit": "8px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.15em", "fontWeight": "600"}],
+                        "display-xl": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-bg {
+            background: radial-gradient(circle at top right, #2a2a2a, #000000);
+        }
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 font-body-md text-on-surface h-full">
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-50 border-b border-zinc-900 dark:border-zinc-50 bg-white">
+        <nav class="flex justify-between items-center h-20 px-8 md:px-16 w-full">
+            <a href="/" class="text-2xl font-black tracking-[0.3em] text-black uppercase cursor-pointer hover:opacity-75 transition-opacity">
+                AD7ERclo
+            </a>
+            
+            <div class="flex items-center gap-6 text-black">
+                <span class="material-symbols-outlined cursor-pointer hover:opacity-70 transition-opacity duration-300" data-icon="search">search</span>
+                <span class="material-symbols-outlined cursor-pointer hover:opacity-70 transition-opacity duration-300" data-icon="shopping_bag">shopping_bag</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="h-full w-full flex items-center justify-center relative overflow-hidden hero-bg">
+        <!-- Abstract Background Detail -->
+        <div class="absolute inset-0 z-0">
+            <img alt="" class="w-full h-full object-cover opacity-30 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU9mIO6W0e8ORn8ia5aZekDcFE_oh1cD2cy8ZrUOaluVyvdr362EQVg7s6wgvNmvDdsPXj-opMK3dn1-4N0CnZAcbAD5oGzRi9LT9ee7eNx2khlE39O7wMksWAzt4C8LYiWcsCLGtvaSp-iWd8JY3NTki4ws0Afgio3qZyay6Sy_cmm-Si7y70Tnzxlo4yoY3tqsLHsooFEpmgfqL_U5ARlDAALjEG0f9voqwp6bUyNg4g9x5bd_y_vvOkl3rc7AdyhWwYXCn2jP1j">
+        </div>
+
+        <!-- Login Card -->
+        <div class="z-10 w-full max-w-md mx-4">
+            <div class="glass-card p-12 md:p-16 flex flex-col items-center" style="transform: rotateY(0deg) rotateX(0deg);">
+                <!-- Brand Logo -->
+                <div class="mb-12">
+                    <h1 class="text-2xl font-black tracking-[0.4em] text-white uppercase">AD7ERclo</h1>
+                    <div class="h-0.5 w-8 bg-white mx-auto mt-2"></div>
+                </div>
+
+                <form method="POST" class="w-full space-y-8">
+                    <!-- Dynamic Alerts -->
+                    {errorMessage && (
+                        <div class="w-full bg-red-950/60 border border-red-500/50 p-4 text-center rounded">
+                            <p class="text-[10px] font-label-caps tracking-widest text-red-200 uppercase">{errorMessage}</p>
+                        </div>
+                    )}
+                    {successMessage && (
+                        <div class="w-full bg-emerald-950/40 border border-emerald-500/30 p-4 text-center rounded-lg flex items-center justify-center gap-3 animate-pulse">
+                            <span class="material-symbols-outlined text-emerald-400 text-[20px] select-none animate-bounce">check_circle</span>
+                            <p class="text-[11px] font-label-caps tracking-[0.2em] font-medium text-emerald-200 uppercase">{successMessage}</p>
+                        </div>
+                        <script is:inline>
+                            setTimeout(() => {
+                                window.location.href = "/admin";
+                            }, 1500);
+                        </script>
+                    )}
+
+                    <!-- Username Field -->
+                    <div class="space-y-2">
+                        <label class="block font-label-caps text-label-caps text-zinc-400 uppercase">Username</label>
+                        <input name="username" required class="w-full bg-transparent border-0 border-b border-zinc-700 text-white font-body-md py-2 focus:ring-0 focus:border-white transition-colors duration-300 outline-none" placeholder="ENTER YOUR IDENTIFIER" type="text">
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="space-y-2 relative group">
+                        <label class="block font-label-caps text-label-caps text-zinc-400 uppercase">Password</label>
+                        <div class="relative">
+                            <input id="password-input" name="password" required class="w-full bg-transparent border-0 border-b border-zinc-700 text-white font-body-md py-2 pr-10 focus:ring-0 focus:border-white transition-colors duration-300 outline-none" placeholder="••••••••" type="password">
+                            <button type="button" id="toggle-password" class="absolute right-0 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white transition-colors duration-300 flex items-center justify-center p-1">
+                                <span class="material-symbols-outlined text-[20px] select-none">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Forgot Password Link -->
+                    <div class="text-right">
+                        <a class="font-label-caps text-[10px] text-zinc-500 hover:text-white tracking-widest transition-colors duration-300" href="#">FORGOT PASSWORD?</a>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="pt-4">
+                        <button class="w-full bg-white text-black py-4 font-label-caps text-label-caps tracking-[0.3em] hover:bg-zinc-200 transition-all duration-300 active:scale-[0.98]" type="submit">
+                            LOGIN
+                        </button>
+                    </div>
+
+                    <!-- Secondary Option -->
+                    <div class="text-center pt-8">
+                        <p class="font-label-caps text-[10px] text-zinc-500 tracking-widest">
+                            NEW TO THE ARCHIVE? <a class="text-white hover:underline underline-offset-4 ml-2" href="#">CREATE ACCOUNT</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script is:inline>
+        // Subtle mouse movement interaction for the glass card
+        const card = document.querySelector('.glass-card');
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            }
+        });
+
+        // Reset transform on mouse leave
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // Password visibility toggle
+        (function() {
+            const passwordInput = document.getElementById('password-input');
+            const toggleBtn = document.getElementById('toggle-password');
+            const icon = toggleBtn.querySelector('.material-symbols-outlined');
+
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+            });
+        })();
+    </script>
+</body>
+</html>
